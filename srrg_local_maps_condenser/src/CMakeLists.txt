@@ -1,0 +1,1 @@
+add_subdirectory(srrg_local_maps_condenser)
