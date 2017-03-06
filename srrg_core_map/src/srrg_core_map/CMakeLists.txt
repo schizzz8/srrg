@@ -4,6 +4,7 @@ add_library(srrg_core_map_library SHARED
   cloud.cpp cloud.h
   image_map_node.cpp image_map_node.h
   local_map.h local_map.cpp
+  local_map_with_traversability.h local_map_with_traversability.cpp
   map_node.cpp map_node.h
   map_node_list.cpp map_node_list.h
   multi_camera_info.cpp multi_camera_info.h
