@@ -1,0 +1,8 @@
+Header header
+float64 horizontal_fov
+float64 vertical_fov
+float64 horizontal_resolution
+float64 vertical_resolution
+float64 max_range
+float64 min_range
+float64 depth_quantization 

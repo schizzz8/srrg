@@ -1,0 +1,16 @@
+add_executable(srrg_message_dumper_node srrg_message_dumper_node.cpp )
+target_link_libraries(srrg_message_dumper_node 
+  srrg_ros_wrappers_library
+  ${catkin_LIBRARIES}
+)
+
+add_executable(srrg_state_publisher_node  srrg_state_publisher_node.cpp)
+target_link_libraries(srrg_state_publisher_node
+  srrg_ros_wrappers_library
+  ${catkin_LIBRARIES}
+)
+
+add_executable(srrg_laser_scan_publisher_node srrg_laser_scan_publisher_node.cpp)
+target_link_libraries(srrg_laser_scan_publisher_node
+  ${catkin_LIBRARIES}
+)

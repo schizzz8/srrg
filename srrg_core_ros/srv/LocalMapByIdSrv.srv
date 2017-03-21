@@ -1,0 +1,4 @@
+int32 local_map_id
+---
+int32 local_map_id
+LocalMapMsg local_map
