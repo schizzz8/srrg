@@ -108,8 +108,8 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES srrg_structure_analyzer
+  INCLUDE_DIRS src
+  LIBRARIES srrg_structure_analyzer_library
   CATKIN_DEPENDS roscpp rospy srrg_core srrg_core_map
 #  DEPENDS system_lib
 )
