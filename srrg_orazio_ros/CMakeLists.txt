@@ -1,54 +1,37 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(srrg_core)
+project(srrg_orazio_ros)
 
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-# To uncomment in the futute
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++11")
-
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
-set(CMAKE_BUILD_TYPE Release)
-
-message(STATUS "PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
-if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES armv7l)
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
-  message("ENABLING ARM NEON OPTIMIZATIONS")
-endif ()
+SET(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++11 -Wall")
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  srrg_boss
+  nav_msgs
+  roscpp
+  srrg_core_ros
+  srrg_orazio_core
 )
 
+add_executable(orazio_robot_node
+  src/orazio_robot_node.cpp)
+
+target_link_libraries(orazio_robot_node
+  orazio_core_library
+  ${CMAKE_THREAD_LIBS_INIT}
+  ${catkin_LIBRARIES}
+)
+
+FIND_PACKAGE(Threads REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
-# Find Eigen3
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
-
-#ds OpenCV: we do not want to use the kinect opencv(3) package
-if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
-
-  #ds use our custom opencv
-  set(OpenCV_DIR "$ENV{HOME}/source/libraries/opencv/build/release")
-  find_package(OpenCV REQUIRED)
-  message("using custom OpenCV ${OpenCV_VERSION} (${OpenCV_DIR})")
-
-else()
-
-  #ds regular find (TODO enforce custom opencv installation?)
-  find_package(OpenCV REQUIRED)
-  message("using system OpenCV ${OpenCV_VERSION} (${OpenCV_DIR})")
-
-endif()
-include_directories(${OpenCV_INCLUDE_DIRS})
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -104,7 +87,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
+#   nav_msgs#   thin_msgs
 # )
 
 ################################################
@@ -137,9 +120,9 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS src
-  LIBRARIES srrg_system_utils_library srrg_txt_io_library srrg_distance_map_library srrg_bresenham_library srrg_octree_library
-  CATKIN_DEPENDS srrg_boss
+#  INCLUDE_DIRS include
+#  LIBRARIES arduino_robot
+#  CATKIN_DEPENDS nav_msgs roscpp thin_msgs
 #  DEPENDS system_lib
 )
 
@@ -152,32 +135,29 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  ${PROJECT_SOURCE_DIR}/src
 )
 
 ## Declare a C++ library
-# add_library(srrg_core
-#   src/${PROJECT_NAME}/srrg_core.cpp
+# add_library(arduino_robot
+#   src/${PROJECT_NAME}/arduino_robot.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(srrg_core ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(arduino_robot ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(srrg_core_node src/srrg_core_node.cpp)
+# add_executable(arduino_robot_node src/arduino_robot_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(srrg_core_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(arduino_robot_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(srrg_core_node
+# target_link_libraries(arduino_robot_node
 #   ${catkin_LIBRARIES}
 # )
-
-add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
 #############
 ## Install ##
@@ -194,7 +174,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS srrg_core srrg_core_node
+# install(TARGETS arduino_robot arduino_robot_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -219,7 +199,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_srrg_core.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_arduino_robot.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

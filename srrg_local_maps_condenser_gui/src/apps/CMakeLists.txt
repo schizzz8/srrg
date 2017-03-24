@@ -1,0 +1,5 @@
+add_executable(srrg_local_maps_condenser_gui_app srrg_local_maps_condenser_gui_app.cpp)
+target_link_libraries(srrg_local_maps_condenser_gui_app 
+  srrg_local_maps_condenser_viewers_library
+  ${catkin_LIBRARIES}
+)

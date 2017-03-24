@@ -1,1 +1,2 @@
 add_subdirectory(srrg_local_maps_condenser_viewers)
+add_subdirectory(apps)

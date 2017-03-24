@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(srrg_core)
+project(srrg_mesh_extractor)
+
+## Add support for C++11, supported in ROS Kinetic and newer
+# add_definitions(-std=c++11)
 
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -23,32 +26,28 @@ endif ()
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  srrg_boss
+  roscpp
+  rospy
+  srrg_core
 )
 
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
-
-# Find Eigen3
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-#ds OpenCV: we do not want to use the kinect opencv(3) package
-if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
+find_package(PCL 1.6 REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 
-  #ds use our custom opencv
-  set(OpenCV_DIR "$ENV{HOME}/source/libraries/opencv/build/release")
-  find_package(OpenCV REQUIRED)
-  message("using custom OpenCV ${OpenCV_VERSION} (${OpenCV_DIR})")
+find_package(VTK REQUIRED)
+include(${VTK_USE_FILE})
 
-else()
-
-  #ds regular find (TODO enforce custom opencv installation?)
-  find_package(OpenCV REQUIRED)
-  message("using system OpenCV ${OpenCV_VERSION} (${OpenCV_DIR})")
-
-endif()
+find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
+
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -138,8 +137,8 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS src
-  LIBRARIES srrg_system_utils_library srrg_txt_io_library srrg_distance_map_library srrg_bresenham_library srrg_octree_library
-  CATKIN_DEPENDS srrg_boss
+#  LIBRARIES mesh_extractor
+#  CATKIN_DEPENDS roscpp rospy
 #  DEPENDS system_lib
 )
 
@@ -156,24 +155,32 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(srrg_core
-#   src/${PROJECT_NAME}/srrg_core.cpp
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/mesh_extractor.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(srrg_core ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(srrg_core_node src/srrg_core_node.cpp)
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/mesh_extractor_node.cpp)
+
+## Rename C++ executable without prefix
+## The above recommended prefix causes long target names, the following renames the
+## target back to the shorter version for ease of user use
+## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(srrg_core_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(srrg_core_node
+# target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -194,7 +201,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS srrg_core srrg_core_node
+# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -219,7 +226,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_srrg_core.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_mesh_extractor.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
