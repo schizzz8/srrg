@@ -1,0 +1,4 @@
+/home/giorgio/source/srrg/srrg_orazio_core/build/src/CMakeFiles/orazio_robot_library.dir
+/home/giorgio/source/srrg/srrg_orazio_core/build/src/CMakeFiles/orazio_robot_monitor.dir
+/home/giorgio/source/srrg/srrg_orazio_core/build/src/CMakeFiles/orazio_robot_shell.dir
+/home/giorgio/source/srrg/srrg_orazio_core/build/src/CMakeFiles/orazio_robot_websocket_server.dir

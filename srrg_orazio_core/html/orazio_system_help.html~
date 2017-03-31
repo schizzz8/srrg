@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H2>What to tune in the system?</H2>
+    </p>
+    <p>
+    The system parameters include general settings of the controller, the communication and the type of H bridge you use. <br/>
+    On this page you typically need only to select the right type of
+    H bridge in your system. This is the <b> motor_mode </b> parameter.
+    Currently we support two types of bridges:
+    <ul>
+      <li><b>PWM and DIR (motor_mode=0)</b>: these include all
+	H bridges that are controlled with 2 pins. One issues the PWM,
+	the other one tells the direction. The <b>arduino motor board</b> is
+	a notable example of PWM and DIR controller.
+      </li>
+      <li><b>DUAL PWM (motor_mode=1)</b>: these bridges use two wires that are mutually exclusive and control two directions of rotation. To get the motor rotating in a direction, they issue the PWM on the corresponding pin and leave the other one to 0.  
+      </li>
+    </ul>
+    </p>
+
+    <p>
+    <H2>IMPORTANT</H2>
+    Set the correct motor mode before connecting the H Bridge,
+    and save the parameter to the eeprom.
+    </p>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H2>What to tune in the kinematics?</H2>
+      Here we will tell our robot how big it is and how large its wheel are.
+      We will also asjust the acceleration ramps to tradeoff battery-consumption,
+      reactivity and smoothness.
+
+      Normally we would
+      like to control our robot in standard units, with translational
+      velocities expressed as meters per second, and rotational
+      velocities expressed in radiants per second.  So far our
+      universe consists of encoder ticks and PWM values.  Still the
+      system internally has to deal with these quantities, but we want
+      to expose a more abstract interface.  To this extent we need to
+      relate meters and seconds to encoder ticks (that seems to be the
+      universal measure in our little firmware world, like king's arm
+      for measuring the distances).
+
+      At the end of this section we will be able to impose to the base
+      velocities in standard units.
+
+    </p>
+    <p>
+      <H3> Motor indices and sign of kr/kl </H3> 
+      
+    </p>
+
+    <p>
+      <H3> Kr/KL and Baseline </H3>
+    </p>
+
+    <p>
+      <H3> Velocities and Accelerations </H3>
+    </p>
+
+  </body>
+</html>

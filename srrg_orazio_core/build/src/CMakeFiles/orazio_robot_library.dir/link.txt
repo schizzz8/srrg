@@ -1,0 +1,2 @@
+/usr/bin/ar cr liborazio_robot_library.a  CMakeFiles/orazio_robot_library.dir/orazio_robot_connection.cpp.o CMakeFiles/orazio_robot_library.dir/joint_controller.cpp.o CMakeFiles/orazio_robot_library.dir/serial.c.o CMakeFiles/orazio_robot_library.dir/packet_encoder.cpp.o CMakeFiles/orazio_robot_library.dir/packet_decoder.cpp.o CMakeFiles/orazio_robot_library.dir/differential_drive_kinematics.cpp.o
+/usr/bin/ranlib liborazio_robot_library.a

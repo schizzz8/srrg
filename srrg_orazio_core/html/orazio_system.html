@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+    <script src="orazio.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H1>System Settings</H1>
+    </p>
+    <p>
+      <h2>
+	<a href="orazio_system_help.html"> Click here for help </a>
+      </h2>
+    </p>
+    <div id='msgBox'>Nothing sent yet!</div>
+    <table border="2">
+      <tr>
+	<td> <b> Parameter </b> </td>
+	<td> <b> Set Field</b></td>
+	<td> <b> Explanation </b></td>
+      </tr>
+      <tr>
+	<td> motor_mode </td>
+	<td> 
+	  <input type="text" id="motor_mode" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMotorMode()">Send</button>
+	</td>
+	<td> Type of H bridge. </br> 0: for PWM and DIR </br> 1: Disjoint PWM Channels </td>  
+      </tr>
+      <tr>
+	<td>watchdog_cycles</td>  
+	<td>
+	  <input type="text" id="watchdog_cycles" onclick="stopRefresh()">
+	  <button type="button" onclick="sendWatchdogCycles()">Send</button>
+	</td>
+	<td> 
+	  Watchdog control. Stops the robot if no communication occurs. </br> 
+	  0: disable watchdog, orazio remembers the last command forever. </br>
+	  N: detach motors after N cycles </br>
+	</td>
+      </tr>
+      <tr>
+	<td>comm_cycles</td>  
+	<td>
+	  <input type="text" id="comm_cycles" onclick="stopRefresh()">
+	  <button type="button" onclick="sendCommCycles()">Send</button>
+	</td>
+	<td> 
+	  How many cycles of communication to skip. </br> 
+	  Higher values mean reduced packet rate. The rate is 100/n </br>
+	  1: 100 hz </br>
+	  2: 50 hz </br>
+	  3: 33 hz </br>
+	  and so on often to perform the communication loop.   
+	</td>
+      </tr>
+    </table>
+    <button type="button" onclick="saveParams()">SaveParamsOnEEPROM<br\> Use With Care</button></td>
+</body>
+</html>

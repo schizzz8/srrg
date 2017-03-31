@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+    <script src="orazio.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H2>Kinematics Settings</H2>
+    </p>
+    <p>
+      <h2>
+	<a href="orazio_kinematics_help.html"> Click here for help </a>
+      </h2>
+    </p>
+    <div id='msgBox'>Nothing sent yet!</div>
+    <table border="2">
+      <tr>
+	<td><b>Parameter</b></td>  
+	<td><b>Value</b></td>  
+	<td><b>Explanation</b></td> 
+      </tr>
+      
+      <tr>
+	<td>ikr</td>  
+	<td><input type="text" id="ikr" onclick="stopRefresh()">
+	  <button type="button" onclick="sendInverseKr()">Send</button></td>
+	<td>forward encoder/ticks right wheel [ticks/meters]</td>
+      </tr>
+      <tr>
+	<td>ikl</td>  
+	<td><input type="text" id="ikl" onclick="stopRefresh()">
+	  <button type="button" onclick="sendInverseKl()">Send</button></td>
+	<td>forward encoder/ticks left wheel [ticks/meters]</td>
+      </tr>
+
+      <tr>
+	<td>bart_kr</td>  
+	<td><input type="text" id="bart_kr" onclick="stopRefresh()">
+	  <button type="button" onclick="sendBartoloKr()">Send</button></td>
+	<td>forward appearant right wheel diameter for use with nw_calibration</td>
+      </tr>
+      <tr>
+	<td>bart_kl</td>  
+	<td><input type="text" id="bart_kl" onclick="stopRefresh()">
+	  <button type="button" onclick="sendBartoloKl()">Send</button></td>
+	<td>forward appearant left wheel diameter for use with nw_calibration</td>
+      </tr>
+
+      <tr>
+	<td>kr</td>  
+	<td><input type="text" id="kr" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKr()">Send</button></td>
+	<td>forward meters/encoder tick right wheel [meters/ticks]</td>
+      </tr>
+      <tr>
+	<td>kl</td>  
+	<td><input type="text" id="kl" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKl()">Send</button></td>
+	<td>forward meters/encoder tick left wheel [meters/ticks]</td>
+      </tr>
+      <tr>
+	<td>baseline</td>  
+	<td><input type="text" id="baseline" onclick="stopRefresh()">
+	  <button type="button" onclick="sendBaseline()">Send</button></td>
+	<td>distance between wheels [meters]</td>
+      </tr>
+      <tr>
+	<td>max_tv</td>  
+	<td><input type="text" id="max_tv" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxTV()">Send</button></td>
+	<td>max translational velocity [meters/second]</td>
+      </tr>
+      <tr>
+	<td>max_ta</td>  
+	<td><input type="text" id="max_ta" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxTA()">Send</button></td>
+	<td>max translational acceleration [meters/second^2]</td>
+      </tr>
+      <tr>
+	<td>max_tbrake</td>  
+	<td><input type="text" id="max_tb" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxTBrake()">Send</button></td>
+	<td>max translational braking deceleration [meters/second^2]</td>
+      </tr>
+      <tr>
+	<td>max_rv</td>  
+	<td><input type="text" id="max_rv" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxRV()">Send</button></td>
+	<td>max rotational velocity [rad/second]</td>
+      </tr>
+      <tr>
+	<td>max_ra</td>  
+	<td><input type="text" id="max_ra" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxRA()">Send</button></td>
+	<td>max rotational acceletation [rad/second]</td>
+      </tr>
+      <tr>
+	<td>right_motor</td>  
+	<td><input type="text" id="right_motor_index" onclick="stopRefresh()">
+	  <button type="button" onclick="sendRightMotorIndex()">Send</button></td>
+	<td>index of joint for right wheel [0,1]</td>
+      </tr>
+      <tr>
+	<td>left_motor</td>  
+	<td><input type="text" id="left_motor_index" onclick="stopRefresh()">
+	  <button type="button" onclick="sendLeftMotorIndex()">Send</button></td>
+	<td>index of joint for left wheel [0,1]</td>
+      </tr>
+    </table>
+    <table border="2">
+      <tr>
+	<td><b>Command </b></td>  
+	<td><b>Value </b> </td>
+	<td><b>Explanation </b> </td>
+      </tr>
+      <tr>
+	<td>base_velocity</td>  
+	<td>
+	  <input type="text" id="base_velocities" onclick="stopRefresh()">
+	  <button type="button" onclick="sendBaseVelocities()">Send</button>
+	</td>
+	<td>
+	  Sets the base velocity. String with float numbers TV and RV<br/>
+	  TV: sets the translational velocity of the base [meters/second]<br/>
+	  RV: sets the rotational velocity [rad/second]
+	</td>  
+      </tr>
+    </table>
+    <button type="button" onclick="saveParams()">SaveParamsOnEEPROM<br\> Use With Care</button></td>
+</body>
+</html>

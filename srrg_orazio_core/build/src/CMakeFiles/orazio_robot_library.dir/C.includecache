@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/giorgio/source/srrg/srrg_orazio_core/src/serial.c
+serial.h
+/home/giorgio/source/srrg/srrg_orazio_core/src/serial.h
+errno.h
+-
+termios.h
+-
+unistd.h
+-
+string.h
+-
+stdio.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+
+/home/giorgio/source/srrg/srrg_orazio_core/src/serial.h
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+termios.h
+-
+unistd.h
+-
+

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Orazio Robot Web Controller</title>
+	<script src="orazio.js" type="text/javascript"></script>
+        </script>
+    </head>
+    <body>
+        <div id='msgBox'>Nothing sent yet!</div>
+	<table border="2">
+	  <tr>
+	    <td>
+	      <table>
+		<tr>
+		  <td> motor_mode </td>
+		  <td> <input type="text" id="motor_mode" onclick="stopRefresh()"></td>
+		  <td> <button type="button" onclick="sendMotorMode()">Send</button></td>
+		</tr>
+              	<tr>
+		  <td>watchdog_cycles</td>  
+		 <td><input type="text" id="watchdog_cycles" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendWatchdogCycles()">Send</button></td>
+		</tr>
+              	<tr>
+		  <td>comm_cycles</td>  
+		 <td><input type="text" id="comm_cycles" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendCommCycles()">Send</button></td>
+		</tr>
+	      </table>
+	    </td>
+	    <td>
+	      <table>
+              	<tr>
+	      	  <td>kp</td>  
+		  <td><input type="text" id="kp_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKp0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>ki</td>  
+		  <td><input type="text" id="ki_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKi0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>kd</td>  
+		  <td><input type="text" id="kd_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKd0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_speed</td>  
+		  <td><input type="text" id="max_speed_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxSpeed0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>min_pwm</td>  
+		  <td><input type="text" id="min_pwm_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMinPWM0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_pwm</td>  
+		  <td><input type="text" id="max_pwm_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxPWM0()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>slope</td>  
+		  <td><input type="text" id="slope_0" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendSlope()">Send</button></td>
+		</tr>
+		</table>
+	    </td>
+	    <td>
+	      <table>
+              	<tr>
+	      	  <td>kp</td>  
+		  <td><input type="text" id="kp_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKp1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>ki</td>  
+		  <td><input type="text" id="ki_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKi1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>kd</td>  
+		  <td><input type="text" id="kd_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKd1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_speed</td>  
+		  <td><input type="text" id="max_speed_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxSpeed1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>min_pwm</td>  
+		  <td><input type="text" id="min_pwm_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMinPWM1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_pwm</td>  
+		  <td><input type="text" id="max_pwm_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxPWM1()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>slope</td>  
+		  <td><input type="text" id="slope_1" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendSlope()">Send</button></td>
+		</tr>
+		</table>
+	    </td>
+	    <td>
+	      <table>
+              	<tr>
+	      	  <td>kr</td>  
+		  <td><input type="text" id="kr" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKr()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>kl</td>  
+		  <td><input type="text" id="kl" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendKl()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>baseline</td>  
+		  <td><input type="text" id="baseline" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendBaseline()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_tv</td>  
+		  <td><input type="text" id="max_tv" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxTV()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_ta</td>  
+		  <td><input type="text" id="max_ta" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxTA()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_td</td>  
+		  <td><input type="text" id="max_td" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxTD()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_rv</td>  
+		  <td><input type="text" id="max_rv" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxRV()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>max_ra</td>  
+		  <td><input type="text" id="max_ra" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendMaxRA()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>right_motor</td>  
+		  <td><input type="text" id="right_motor_index" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendRightMotorIndex()">Send</button></td>
+		</tr>
+              	<tr>
+	      	  <td>left_motor</td>  
+		  <td><input type="text" id="left_motor_index" onclick="stopRefresh()"></td>
+		  <td><button type="button" onclick="sendLeftMotorIndex()">Send</button></td>
+		</tr>
+		</table>
+	    </td>
+	    </tr>
+	</table>
+	<table>
+          <tr>
+	    <td>pwm_command</td>  
+	    <td><input type="text" id="joints_pwm" onclick="stopRefresh()"></td>
+	    <td><button type="button" onclick="sendPWM()">Send</button></td>
+	  </tr>
+          <tr>
+	    <td>speed_command</td>  
+	    <td><input type="text" id="joints_speed" onclick="stopRefresh()"></td>
+	    <td><button type="button" onclick="sendSpeed()">Send</button></td>
+	  </tr>
+          <tr>
+	    <td>base_velocities</td>  
+	    <td><input type="text" id="base_velocities" onclick="stopRefresh()"></td>
+	    <td><button type="button" onclick="sendBaseVelocities()">Send</button></td>
+	  </tr>
+	</table>
+	<button type="button" onclick="saveParams()">SaveParamsOnEEPROM<br\> Use With Care</button></td>
+</body>
+</html>

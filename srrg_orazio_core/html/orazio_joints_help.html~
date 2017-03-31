@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H2>What to tune in the joints?</H2>
+      Here you will connect the encoders, veryfy the H bridge and check that all connections are properly made.
+      The process is incremental, you will check the things one at a time while doing them. If you make some mistake
+      the probablity that you damage some hardware is rather small.
+    </p>
+    <p>
+      <H3> Connecting and checnking the encoders </H3>
+      You need to connect the encoders to arduino and verify if they are correctly sensed.
+      First you need to power up the encoders, by connecting the red and black wires to the +5v and the GND pins on the
+      arduino.
+    </p>
+
+    <p>
+      <H3> Connecting and checking the H bridge </H3>
+    </p>
+
+    <p>
+      <H3> Connecting the motors </H3>
+    </p>
+
+    <p>
+      <H3> Open Loop Tuning </H3>
+    </p>
+
+    <p>
+      <H3> PID tuning </H3>
+    </p>
+
+  </body>
+</html>

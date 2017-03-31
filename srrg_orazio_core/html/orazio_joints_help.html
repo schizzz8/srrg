@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H1>What to tune in the joints?</H2>
+      Here you will connect the encoders, veryfy the H bridge and check that all connections are properly made.
+      The process is incremental, you will check the things one at a time while doing them. If you make some mistake
+      the probablity that you damage some hardware is rather small.
+    </p>
+    <p>
+      <H3> Connecting and checking the encoders </H3>
+      You need to connect the encoders to arduino and verify if they are correctly sensed.
+      Here are the connections:
+      <ul>
+	Power (for both motors)
+	<ul>
+	  <li> power (+5v), is the <b>blue</b> wire on the motors. It can go to any of the +5v outputs of the arduino. </li>
+ 	  <li> GND (+5v), is the <b> green </b>  wire on the motors. It can go to any of the +5v outputs of the arduino. </li>
+	</ul>
+ 	<li> right motor </li> 
+	<ul>
+	  <li> phase_a, is the <b>yellow</b> wire, on pin 50 of arduino. </li>
+ 	  <li> phase_b, is the <b>white</b> wire, on pin 51 of arduino </li>
+	</ul>
+ 	<li> left motor </li> 
+	<ul>
+	  <li> phase_a, is the <b>yellow</b> wire, on pin 52 of arduino. </li>
+ 	  <li> phase_b, is the <b>white</b> wire, on pin 53 of arduino </li>
+	</ul>
+      </ul>
+    
+      Once you have done the above connection you can check if it works by manually rotating the wheels.
+      If you go on the <a href="orazio_joints.html?joints" target="_parent"> Joints </a> page you should be able
+      to see the numbers in the field <i>encoder_position</i> changing when you rotate the wheel.
+      They should when you rotate in one direction and decrease when you rotate in the other.<br/>
+      If this is not the case, you made something wrong with the connections. Check them again,
+      and connect the motors one at a time.
+
+    </p>
+ 
+   <p>
+     <H3> Connecting and checking the H bridge </H3>
+     Done with the encoders? It is now time to connect the H bridge. If you use the arduino motor board,
+     there is not much you have to do, besides stacking the board on the arduino.
+     
+     If you use some other H bridge, you will have to connect
+     <ul>
+       <li> Groud: the logical ground of the board and the arduino.</li>
+       <li> For each motor at least two wires. The meaning of the wires depends ont he
+	 type of the  bridge. You should have already configured the motor mode while
+	 configuring the <a href="orazio_system.html?system" target="_parent"> System </a>. <br/>
+	 We now list the connections you have to made for an L298N bridge like the one
+	 in the marrtino page. This is controlled in dual PWM mode (mode 1).
+	 <ul>
+	   <li> L298N-In1 -> PWM pin 2 </li>
+	   <li> L298N-In2 -> PWM pin 3 </li>
+	   <li> L298N-In3 -> PWM pin 4 </li>
+	   <li> L298N-In4 -> PWM pin 5 </li>
+	   <li> L298N-GND -> Arduino Ground </li>
+	 </ul>
+       </li>
+     </ul>
+     After connecting the H bridge, but without connecting the motor power, we can test
+     if everything is right using a tester. <br/>
+     To this end, power the H bridge by connecting the battery in to a 12V source. <br\>
+     It is convenient to disable the watchdog, by setting to 0 the watchdog_cycles in 
+     <a href="orazio_system.html?system" target="_parent"> System </a>.
+     In this way the control we send to the board will be executed forever and we have more
+     time for debugging. <br\>
+     With a tester at hand measure the voltage in the motor outputs of the encoder.
+     
+     Issue a "255 0" in the PWM_speed caption, and measure the voltage. You should
+     get a high value. Be sure you are measuring the correct output, you have 2 motors.
+     Issue a "-255 0", and check the voltage. You should a number having an opposite sign
+     w.r.t before (you are giving a negative voltage after all). <br/>
+
+     Now test the other channel, by issuing "0 255" and "0 -255", and see if the outputs
+     are consistent.
+     Finally issue a "0 0" and measure again the outputs. They should be around zero both.<br/>
+   
+     If this does not work, you might have made a mistake. 
+     Check the wires again, and be sure the H bridge is
+     of the correct type.
+   </p>
+   
+   <p>
+     <H3> Connecting the motors </H3>
+     Ok, the bridge is working, time to see the wheels moving. Connect
+     the motors to the output channels of the bridge.  Here are the
+     connections for our two types of H bridge:
+     <ul>
+       <li>Arduino Motor Board
+	 <ul>
+	   <li>Motor shield out - motors (red + /black -) </li>
+	 </ul>
+       </li>
+       <li>L298N
+	 <ul>
+	   <li>L298N Out1 - Left Motor black</li>
+	   <li>L298N Out2 - Left Motor red</li>
+	   <li>L298N Out3 - Right Motor black</li>
+	   <li>L298N Out4 - Right Motor red</li>
+	 </ul>
+     </ul>
+     Here you can basically make the following mistakes:
+     <ul>
+       <li>swapping the motors</li>
+       <li>inverting the motor polarity</li>
+     </ul>
+     None of the above mistakes is destructive, and they can be easily
+     fixed.  With the motors connected, issue a "100 0" in the pwm box
+     of the <a href="orazio_joints.html?joints" target="_parent">
+     Joints </a> page.
+     You should see one of the motors running in one direction.
+     Check that the <i>encoder_position</i> of the joint 0 is changing.
+     If this not the case you swapped the motors, and you have to swap the
+     left and the right motor <br/>.
+     
+     Another thing you should check is that the number reported in
+     "desired_speed" for a joint has the same sign of the pwm you
+     issue. "100 0" should result in a positive desired speed, while
+     "-100 0" should result in a negative one.  If this is not the
+     case, swap the polarity of the motor on the H bridge. <br/>
+
+     Repeat the test for the other motor, issuing "0 100" and "0 -100" in the pwm_speed field.
+     Once all is working you can go to the next step. <br/>
+   </p>
+    
+    
+   <p>
+     <H3> Open Loop Tuning </H3>
+     Another parameter that is relevant for controlling a motor is the "detach current".
+     Motors require a minimum voltage to rotate. If you issue a voltage below that level,
+     the motor will not move and consime power anyway. We don't like this.
+     So we need to find the minimum voltage (that in our case is the PWM value) to
+     issue to the motor and expect a movement.
+     To find this value for each motor individually, start incrementing the pwm command
+     from "0" to "N" in steps of 10. The <i>pwm_min</i> value is the minimum value for which the motor
+     moves.
+     Save this value as "pwm_min" in the corresponding joint parameter.
+     For "pwm_max" you can leave the default value.
+   </p>
+
+    <p>
+      <H3> PID tuning </H3>
+      The motors are controlled in closed loop, and they get the feedback from the encoder.
+      This means during normal operation,  you tell the encoder a speed expressed as
+      ticks per cycle, and the controller will adjust the PWM to match that
+      value.
+      Normally the parameters of the PID in the default configuration are adequate.
+      For a better tuning you can just follow a  PID tuning tutorial on the web.<br/>
+      
+      Still you can check that the PID does a decent job.
+      Issue a "10 0" on the "desired_speed" for the joint 0. You should see
+      the "desired_speed" in the status_box, and the "encoder_speed" reaching similar values.
+      Try to brake the motor, and you will see that the controller will increase the PWM
+      to keep the speed at a desired level.
+      
+      Do the same with the other motor,
+      You are done with the joints.. 
+    </p>
+    
+    <H2>If you reach this step, and all goes well, save the parameters on the EEPROM. Press the button on the bottom of the Joints page.</H2>
+
+  </body>
+</html>

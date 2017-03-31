@@ -1,0 +1,1 @@
+/usr/bin/c++    --std=gnu++11 -Wall -O3 -DNDEBUG    CMakeFiles/orazio_robot_shell.dir/command_parser.cpp.o CMakeFiles/orazio_robot_shell.dir/orazio_robot_shell.cpp.o  -o orazio_robot_shell -rdynamic liborazio_robot_library.a -lpthread 

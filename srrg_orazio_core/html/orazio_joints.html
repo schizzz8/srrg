@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orazio Robot Web Controller</title>
+    <script src="orazio.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <object type="text/html" data="menu.html">
+      <p>backup content</p>
+    </object>
+    <p>
+      <H1>System Settings</H1>
+    </p>
+    <p>
+      <h2>
+	<a href="orazio_joints_help.html"> Click here for help </a>
+      </h2>
+    </p>
+    <div id='msgBox'>Nothing sent yet!</div>
+    <table border="2">
+      <tr> 
+	<td> <b> Param</b> </td>
+	<td> <b> Joint 0 </b> </td>
+	<td> <b> Joint 1 </b> </td>
+	<td> <b> Explanation </b> </td>
+      </tr>
+      <tr>
+	<td>min_pwm</td>  
+	<td>
+	  <input type="text" id="min_pwm_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMinPWM0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="min_pwm_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMinPWM1()">Send</button>
+	</td>
+	<td>Minimum PWM for which this motor moves [1-255]</td>  
+      </tr>
+      <tr>
+	<td>max_pwm</td>  
+	<td>
+	  <input type="text" id="max_pwm_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxPWM0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="max_pwm_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxPWM1()">Send</button>
+	</td>
+	<td>Maximum  PWM the H bridge supports [1-255]</td>  
+      </tr>
+      <tr>
+	<td>kp</td>  
+	<td>
+	  <input type="text" id="kp_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKp0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="kp_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKp1()">Send</button>
+	</td>
+	<td>Proportional coefficient of the PID, times 256</td>  
+      </tr>
+      <tr>
+	<td>ki</td>  
+	<td>
+	  <input type="text" id="ki_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKi0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="ki_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKi1()">Send</button>
+	</td>
+	<td>Intrgral coefficient of the PID, times 256</td>  
+      </tr>
+      <tr>
+	<td>kd</td>  
+	<td>
+	  <input type="text" id="kd_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKd0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="kd_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendKd1()">Send</button>
+	</td>
+	<td>Derivative coefficient of the PID, times 256</td>  
+      </tr>
+      <tr>
+	<td>max_speed</td>  
+	<td>
+	  <input type="text" id="max_speed_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxSpeed0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="max_speed_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendMaxSpeed1()">Send</button>
+	</td>
+	<td>Max speed [encoder ticks per cycle]</td>  
+      </tr>
+      <tr>
+	<td>slope</td>  
+	<td>
+	  <input type="text" id="slope_0" onclick="stopRefresh()">
+	  <button type="button" onclick="sendSlope0()">Send</button>
+	</td>
+	<td>
+	  <input type="text" id="slope_1" onclick="stopRefresh()">
+	  <button type="button" onclick="sendSlope1()">Send</button>
+	</td>
+	<td>Maximum increment of the velocity in a control cycle [encoder ticks]</td>  
+      </tr>
+    </table>
+    <table border="2">
+      <tr>
+	<td><b>Command </b></td>  
+	<td><b>Value </b> </td>
+	<td><b>Explanation </b> </td>
+      </tr>
+      <tr>
+	<td>pwm_command</td>  
+	<td>
+	  <input type="text" id="joints_pwm" onclick="stopRefresh()">
+	  <button type="button" onclick="sendPWM()">Send</button>
+	</td>
+	<td>
+	  Direct command to the PWM of a Joint. Overrides PID. Is a string with two numbers: 
+	  "PWM0 PWM1" each one in the range  [-max_pwm .. +max_pwm].<br/>
+	  Example:
+	  <i> 50 -60 </i>, will set the motor 1 pwm to 50 and the motor 2 pwm to -60.<br/>
+	  Use this to find the min_pwm parameter for each motor, by progressively increasing the value.
+	  min_pwm is the value you find when a motor starts moving.
+	</td>  
+      </tr>
+      <tr>
+	<td>speed_command</td>  
+	<td>
+	  <input type="text" id="joints_speed" onclick="stopRefresh()">
+	  <button type="button" onclick="sendSpeed()">Send</button>
+	</td>
+	<td>
+	  Direct command to the PID of a Joint, a string with two numbers:
+	  "SPEED0 SPEED1" each one in the range  [-max_speed .. +max_speed].<br/>
+	  Example:
+	  <i> 5 -6 </i>, will set the motor 1 speed to 5 encoder ticks per cycle and the motor 2 speed to -6 ticks per cycle <br/>
+	  A properly tuned PID manages to follow the desired velocity with reasonable accuracy.
+	  Look at the desired_speed and encoder_speed fields above after sending a command.<br/>
+	</td>
+      </tr>
+    </table>
+    <button type="button" onclick="saveParams()">SaveParamsOnEEPROM<br\> Use With Care</button></td>
+</body>
+</html>

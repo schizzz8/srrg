@@ -1,0 +1,1 @@
+/usr/bin/c++    --std=gnu++11 -Wall -O3 -DNDEBUG    CMakeFiles/orazio_robot_monitor.dir/orazio_robot_monitor.cpp.o  -o orazio_robot_monitor -rdynamic liborazio_robot_library.a -lcurses -lpthread 
