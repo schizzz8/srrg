@@ -28,7 +28,7 @@ int rows,cols;
 int square_size=1;
 float gain=5;
 float resolution = 0.05f, max_range = 5.0f, usable_range=5.0f, threshold = -1.0f;
-float occupied_threshold,free_threshold;
+float free_threshold;
 string mapFilename = "output";
 
 
@@ -55,11 +55,15 @@ void readParameters(string filename){
     threshold = (float) fs["Threshold"];
     cerr << "threshold: " << threshold << endl;
 
-    occupied_threshold = (float) fs["OccupiedThreshold"];
-    cerr << "occupied threshold: " << occupied_threshold << endl;
 
     free_threshold = (float) fs["FreeThreshold"];
     cerr << "free threshold: " << free_threshold << endl;
+
+    rows = (int) fs["Rows"];
+    cerr << "rows: " << rows << endl;
+
+    cols = (int) fs["Cols"];
+    cerr << "cols: " << cols << endl;
 
     cerr << endl;
 }
@@ -143,13 +147,13 @@ int main(int argc, char ** argv) {
     for(int c = 0; c < map.cols(); c++) {
         for(int r = 0; r < map.rows(); r++) {
             if(map(r, c).misses() == 0 && map(r, c).hits() == 0) {
-                mapImage.at<unsigned char>(r, c) = 127;
+                mapImage.at<unsigned char>(r, c) = 205;
             } else {
                 float fraction = (float)map(r, c).hits()/(float)(map(r, c).hits()+map(r, c).misses());
                 if (threshold > 0 && fraction > threshold)
                     mapImage.at<unsigned char>(r, c) = 0;
                 else if (threshold > 0 && fraction <= threshold)
-                    mapImage.at<unsigned char>(r, c) = 255;
+                    mapImage.at<unsigned char>(r, c) = 254;
                 else {
                     float val = 255*(1-fraction);
                     mapImage.at<unsigned char>(r, c) = (unsigned char)val;
@@ -161,11 +165,12 @@ int main(int argc, char ** argv) {
 
     ofstream ofs(string(mapFilename + ".yaml").c_str());
     //Eigen::Vector3f origin(0.0f, 0.0f, 0.0f);
-    ofs << "image: " << mapFilename << ".png" << endl
+    ofs << "%YAML:1.0" << endl
+        << "image: " << mapFilename << ".png" << endl
         << "resolution: " << resolution << endl
         << "origin: [" << offset.x() << ", " << offset.y() << ", " << 0.0 << "]" << endl
         << "negate: 0" << endl
-        << "occupied_thresh: " << occupied_threshold << endl
+        << "occupied_thresh: " << threshold << endl
         << "free_thresh: " << free_threshold << endl;
     
     cerr << "done" << endl;

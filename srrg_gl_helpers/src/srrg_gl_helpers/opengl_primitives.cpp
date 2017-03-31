@@ -82,17 +82,21 @@ namespace srrg_gl_helpers {
   }
 
   void drawArrow2D(float len, float head_width, float head_len) {
+    glPushAttrib(GL_COLOR);
     glBegin(GL_LINES);
+    glColor3f(0,1,0);
     glVertex2f(0.f, 0.f);
     glVertex2f(len, 0.f);
     glEnd();
 
     glNormal3f(0.f,0.f,1.f);
     glBegin(GL_TRIANGLES);
+    glColor3f(0,0,1);
     glVertex2f(len, 0.f);
     glVertex2f(len - head_len,  0.5f*head_width);
     glVertex2f(len - head_len, -0.5f*head_width);
     glEnd();
+    glPopAttrib();
   }
 
   void drawPoseBox() {
