@@ -1,35 +1,18 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(srrg_core_viewers)
+project(srrg_cmake_modules)
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-# To uncomment in the future
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++11")
-
-find_package(srrg_cmake_modules REQUIRED)
-set(CMAKE_MODULE_PATH ${srrg_cmake_modules_INCLUDE_DIRS})
-
-set(CMAKE_BUILD_TYPE Release)
-
-message(STATUS "PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
-if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES armv7l)
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
-  message("ENABLING ARM NEON OPTIMIZATIONS")
-endif ()
+## Add support for C++11, supported in ROS Kinetic and newer
+# add_definitions(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
 
-#ds find QGLViewer: generic support for qt4/5
-find_package(QGLViewer REQUIRED)
-include_directories(${QGLVIEWER_INCLUDE_DIR})
-include_directories(${SRRG_QT_INCLUDE_DIRS})
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -117,10 +100,11 @@ include_directories(${SRRG_QT_INCLUDE_DIRS})
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS src
-  LIBRARIES srrg_core_viewers_library
+#  INCLUDE_DIRS include
+#  LIBRARIES srrg_cmake_modules
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
+INCLUDE_DIRS cmake_modules
 )
 
 ###########
@@ -130,34 +114,36 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-  ${PROJECT_SOURCE_DIR}/src
-)
 
 ## Declare a C++ library
-# add_library(srrg_core_viewers
-#   src/${PROJECT_NAME}/srrg_core_viewers.cpp
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/srrg_cmake_modules.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(srrg_core_viewers ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(srrg_core_viewers_node src/srrg_core_viewers_node.cpp)
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/srrg_cmake_modules_node.cpp)
+
+## Rename C++ executable without prefix
+## The above recommended prefix causes long target names, the following renames the
+## target back to the shorter version for ease of user use
+## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(srrg_core_viewers_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(srrg_core_viewers_node
+# target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-
-add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
 #############
 ## Install ##
@@ -174,7 +160,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS srrg_core_viewers srrg_core_viewers_node
+# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -199,7 +185,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_srrg_core_viewers.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_srrg_cmake_modules.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
