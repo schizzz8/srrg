@@ -14,7 +14,8 @@ public:
     Depth2LaserViewer(srrg_depth2laser::Depth2Laser* depth2laser_);
 
     virtual void draw();
-    std::vector<srrg_core::LaserMessage*> scans;
+    //std::vector<std::vector<float> > scans;
+    std::vector<float>  ranges;
 protected:
     srrg_depth2laser::Depth2Laser* _depth2laser;
 

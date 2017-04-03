@@ -67,12 +67,10 @@ int main(int argc, char ** argv) {
         current_transform.translation() = Eigen::Vector3f (x,y,z);
         current_transform.rotate(Eigen::Quaternion<float> (qw,qx,qy,qz));
 
-        double tolerance = 1.0/30.0;
+        double tolerance = 1.0/27.0;
 
         bool found = false;
-        while(!found){
-            msg = reader.readMessage();
-            msg->untaint();
+        while(!found && (msg = reader.readMessage())){
             BaseSensorMessage* sensor_msg = dynamic_cast<BaseSensorMessage*>(msg);
             if (sensor_msg){
                 //cerr << sensor_msg->topic().c_str() << " ";

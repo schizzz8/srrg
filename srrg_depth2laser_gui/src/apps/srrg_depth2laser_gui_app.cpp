@@ -21,7 +21,6 @@ using namespace srrg_depth2laser;
 PinholeImageMessage i;
 LaserMessage l;
 
-QApplication* app;
 Depth2Laser* depth2laser = 0;
 
 const char* banner[] = {
@@ -48,8 +47,8 @@ int main(int argc, char ** argv) {
     MessageWriter writer;
     writer.open(input_filename.substr(0,input_filename.find("."))+"_with_laser.txt");
 
-    app = new QApplication(argc,argv);
-    Depth2LaserViewer* viewer = new Depth2LaserViewer(depth2laser);
+//    QApplication app (argc,argv);
+//    Depth2LaserViewer viewer (depth2laser);
 
 
     bool got_info = false;
@@ -61,37 +60,44 @@ int main(int argc, char ** argv) {
             if(!got_info){
                 depth2laser->setK(pinhole_image_msg->cameraMatrix());
                 cerr << "Camera Matrix:" << endl << depth2laser->K() << endl;
+
                 depth2laser->setCameraTransform(pinhole_image_msg->offset());
                 Eigen::Vector3f camera_translation = depth2laser->cameraTransform().translation();
                 Eigen::Quaternion<float> camera_rotation(depth2laser->cameraTransform().rotation());
                 cerr << "Camera Transform: " << camera_translation.transpose() << " - ";
                 cerr << camera_rotation.x() << " " << camera_rotation.y() << " " << camera_rotation.z() << " " << camera_rotation.w() << endl;
+
                 depth2laser->setLaserTransform();
                 Eigen::Vector3f laser_translation = depth2laser->laserTransform().translation();
                 Eigen::Quaternion<float> laser_rotation(depth2laser->laserTransform().rotation());
                 cerr << "Laser Transform: " << laser_translation.transpose() << " - ";
                 cerr << laser_rotation.x() << " " << laser_rotation.y() << " " << laser_rotation.z() << " " << laser_rotation.w() << endl;
+
                 got_info = true;
             }
             if(got_info && !strcmp(pinhole_image_msg->topic().c_str(),"/camera/depth/image_raw")) {
                 LaserMessage* laser_msg = new LaserMessage;
+                depth2laser->setOdometry(pinhole_image_msg->odometry());
                 depth2laser->setParameters(pinhole_image_msg->seq(),pinhole_image_msg->timestamp(),*laser_msg);
                 depth2laser->compute(pinhole_image_msg->image(),*laser_msg);
-                laser_msg->setOdometry(pinhole_image_msg->odometry());
                 writer.writeMessage(*laser_msg);
-                viewer->scans.push_back(laser_msg);
-                //viewer->_scan = laser_msg;
 
+                //viewer.scans.push_back(laser_msg->ranges());
+                //viewer.ranges = laser_msg->ranges();
+
+
+//                viewer.show();
+//                viewer.updateGL();
+//                app.processEvents();
 
             }
 
         }
     }
-    viewer->show();
-    viewer->updateGL();
-    app->processEvents();
 
     cerr << "done" << endl;
-    //app->exec();
+//    app.exec();
+//    for(int i=0;i<viewer.scans.size();i++)
+//        delete viewer.scans[i];
 
 }

@@ -103,6 +103,7 @@ void Depth2Laser::setParameters(int seq,double timestamp,srrg_core::LaserMessage
     laser_msg.setMaxAngle(_max_angle);
     laser_msg.setAngleIncrement(_angle_increment);
     laser_msg.setOffset(_laser_transform);
+    laser_msg.setOdometry(_odometry);
 }
 
 void Depth2Laser::compute(const cv::Mat& image,srrg_core::LaserMessage& laser_msg){

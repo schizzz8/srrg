@@ -11,13 +11,13 @@ Depth2LaserViewer::Depth2LaserViewer(srrg_depth2laser::Depth2Laser *depth2laser_
 }
 
 void Depth2LaserViewer::draw(){
-    for (size_t i = 0; i<scans.size(); i++){
-        vector<float> ranges = scans[i]->ranges();
-        Eigen::Isometry3f odometry = scans[i]->odometry();
-        Eigen::Isometry3f offset = scans[i]->offset();
+   // for (size_t i = 0; i<scans.size(); i++){
+        //vector<float> ranges = scans[i];
+//        Eigen::Isometry3f odometry = scans[i]->odometry();
+//        Eigen::Isometry3f offset = scans[i]->offset();
 
         glPushMatrix();
-        glMultMatrix(odometry);
+        glMultMatrix(_depth2laser->odometry());
 
         drawArrow2D(0.1,0.05,0.05);
 
@@ -29,9 +29,10 @@ void Depth2LaserViewer::draw(){
                 continue;
 
             float theta = _depth2laser->minAngle() + j*_depth2laser->angleIncrement();
+
             float rho = ranges[j];
             Eigen::Vector3f laser_point(rho*cos(theta),rho*sin(theta),0);
-            Eigen::Vector3f robot_point = offset*laser_point;
+            Eigen::Vector3f robot_point = _depth2laser->laserTransform()*laser_point;
             glColor3f(1,0,0);
             glNormal3f(0,0,1);
             glVertex3f(robot_point.x(), robot_point.y(), robot_point.z());
@@ -40,7 +41,7 @@ void Depth2LaserViewer::draw(){
         glPopAttrib();
         glPopMatrix();
 
-    }
+    //}
 }
 
 }
