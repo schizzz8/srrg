@@ -25,10 +25,10 @@ namespace srrg_depth2laser{
     inline Eigen::Isometry3f cameraTransform(){return _camera_transform;}
     inline void setLaserTransform(const Eigen::Isometry3f& laser_transform_ = Eigen::Isometry3f::Identity()){
         _laser_transform = laser_transform_;
-        //_laser_transform.translation() = _camera_transform.translation();
-        _laser_transform.translation() = Eigen::Vector3f::Zero();
-        _laser_transform.translation().x() = 0.104013;
-        _laser_transform.translation().y() = 0.00379057;
+        _laser_transform.translation() = _camera_transform.translation();
+//        _laser_transform.translation() = Eigen::Vector3f::Zero();
+//        _laser_transform.translation().x() = 0.104013;
+//        _laser_transform.translation().y() = 0.00379057;
         camera2laser_transform = _laser_transform.inverse()*_camera_transform;
     }
     inline Eigen::Isometry3f laserTransform(){return _laser_transform;}

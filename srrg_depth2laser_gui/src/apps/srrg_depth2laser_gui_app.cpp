@@ -50,7 +50,7 @@ int main(int argc, char ** argv) {
 
     app = new QApplication(argc,argv);
     Depth2LaserViewer* viewer = new Depth2LaserViewer(depth2laser);
-    viewer->show();
+
 
     bool got_info = false;
 
@@ -80,14 +80,18 @@ int main(int argc, char ** argv) {
                 laser_msg->setOdometry(pinhole_image_msg->odometry());
                 writer.writeMessage(*laser_msg);
                 viewer->scans.push_back(laser_msg);
+                //viewer->_scan = laser_msg;
 
-                viewer->updateGL();
-                app->processEvents();
 
             }
 
         }
     }
-    app->exec();
+    viewer->show();
+    viewer->updateGL();
+    app->processEvents();
+
     cerr << "done" << endl;
+    //app->exec();
+
 }
