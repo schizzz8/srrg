@@ -9,9 +9,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 # To uncomment in the futute
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++11")
 
-find_package(srrg_cmake_modules REQUIRED)
-set(CMAKE_MODULE_PATH ${srrg_cmake_modules_INCLUDE_DIRS})
-
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 set(CMAKE_BUILD_TYPE Release)
 
 message(STATUS "PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
