@@ -1,13 +1,25 @@
 <launch>
 <node pkg="srrg_localizer2d_ros" type="srrg_localizer2d_node" name="srrg_localizer2d" output="screen">
-<!--  
-  <param name="initial_pose_x" value="10.340"/>
-  <param name="initial_pose_y" value="12.139"/>
-  <param name="initial_pose_theta" value="3.14"/>
--->
-  <param name="initial_pose_x" value="2.239"/>
+  
+  <param name="initial_pose_x" value="6.073"/>
+  <param name="initial_pose_y" value="7.333"/>
+  <param name="initial_pose_theta" value="-0.896"/>
+
+<!--
+  <param name="initial_pose_x" value="2.23"/>
   <param name="initial_pose_y" value="1.709"/>
   <param name="initial_pose_theta" value="3.14"/>
+-->
+
+<!--
+  <param name="initial_pose_x" value="8.917"/>
+  <param name="initial_pose_y" value="10.791"/>
+  <param name="initial_pose_theta" value="-0.959"/>
+-->
+
+
+  <param name="min_weight" value="1"/>
+  <param name="endpoint_distance" value="0.01"/>
   <param name="global_frame_id" value="map"/>
   <param name="base_frame_id" value="base_link"/>
   <param name="odom_frame_id" value="odom"/>

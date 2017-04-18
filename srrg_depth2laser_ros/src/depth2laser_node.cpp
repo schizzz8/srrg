@@ -128,13 +128,6 @@ void infoCallback(const sensor_msgs::CameraInfo::ConstPtr& info){
     K(2,1) = camerainfo.K.c_array()[7];
     K(2,2) = camerainfo.K.c_array()[8];
 
-    K = Eigen::Matrix3f::Zero();
-    K(0,0) = 273.457;
-    K(1,1) = 273.457;
-    K(0,2) = 159.5;
-    K(1,2) = 119.5;
-    K(2,2) = 1;
-
     inv_K=K.inverse();
     cerr << "got camera matrix" << endl;
     cerr << K << endl;
@@ -233,8 +226,8 @@ void EchoParameters(){
   cerr << "_laser_plane_thickness: " << c.laser_plane_thickness << endl;
   cerr << "_base_frame_id: " << c.base_frame_id << endl;
   cerr << "_laser_frame_id: " << c.laser_frame_id << endl;
-  cerr << "_depth_topic: " << c.camera_image_topic << endl;
   cerr << "_camera_image_topic: " << c.camera_image_topic << endl;
+  cerr << "_camera_info_topic: " << c.camera_info_topic << endl;
   cerr << "_pointcloud_topic: " << c.pointcloud_topic << endl;
   cerr << "_laser_topic: " <<  c.laser_topic << endl;
   cerr << "_publish_pointcloud: " << c.publish_pointcloud << endl;

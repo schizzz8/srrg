@@ -1,1 +1,2 @@
 add_subdirectory(srrg_local_maps_condenser)
+add_subdirectory(examples)

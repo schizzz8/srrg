@@ -25,6 +25,10 @@ void startLocalizer(ROSLocalizer* localizer, ros::NodeHandle& private_nh) {
   private_nh.param("distance_threshold", distance_threshold, 1.0);
   cerr << "[float] _distance_threshold: " << distance_threshold << endl;
 
+  double endpoint_distance;
+  private_nh.param("endpoint_distance", endpoint_distance, 0.1);
+  cerr << "[float] _endpoint_distance: " << endpoint_distance << endl;
+  
   bool dynamic_restart;
   private_nh.param("dynamic_restart", dynamic_restart, false);
   cerr << "[bool] _dynamic_restart: " << dynamic_restart << endl;
@@ -67,7 +71,8 @@ void startLocalizer(ROSLocalizer* localizer, ros::NodeHandle& private_nh) {
   }
       
 
-  localizer->init(particles, distance_threshold, 0.2, min_weight);
+  localizer->init(particles, distance_threshold, 0.2, min_weight,10);
+  localizer->setSquaredEndpointDistance(endpoint_distance*endpoint_distance);
   if (use_gui)
     localizer->initGUI();
 

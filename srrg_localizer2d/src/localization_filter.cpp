@@ -340,7 +340,7 @@ namespace srrg_localizer2d {
       }
       float distance = fabs(_distances.at<float>(p.x(),p.y()));
       *dist_ptr=distance;
-      cumulative_distance+=fabs(_distances.at<float>(p.x(),p.y()));
+      cumulative_distance+=distance;
       valid_points++;
     }
 

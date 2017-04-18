@@ -50,7 +50,7 @@ void StructureAnalyzer::compute(Cloud* cloud_, const Eigen::Isometry3f& iso) {
         int c=projected_point.x();
         if (r>=_indices.rows || r<0)
             continue;
-        if (c>=_indices.cols || r<0)
+        if (c>=_indices.cols || c<0)
             continue;
         float &h=_elevations.at<float>(r,c);
         int& idx=_indices.at<int>(r,c);

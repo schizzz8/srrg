@@ -96,9 +96,11 @@ int main (int argc, char** argv) {
     cerr << "Traversability Map resolution: " << resolution << endl;
     cerr << "Voxel size: " << voxel_size << endl;
 
-    LocalMapsClusterizer clusterizer(depth,resolution,voxel_size);
-    clusterizer.setInput(lmaps);
-    clusterizer.execute();
+    LocalMapsClusterizer clusterizer (depth,resolution,1,voxel_size);
+    clusterizer.computeBoundingBox(lmaps);
+    clusterizer.buildQuadtree();
+    //clusterizer.visualizeQuadtree();
+    clusterizer.mergeLocalMaps();
 
     MapNodeList* clusters = clusterizer.clusters();
     for(MapNodeList::iterator it = clusters->begin(); it != clusters->end(); it++){

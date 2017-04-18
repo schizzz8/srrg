@@ -75,7 +75,7 @@ int main(int argc, char ** argv) {
             if (sensor_msg){
                 //cerr << sensor_msg->topic().c_str() << " ";
                 //cerr << fixed << sensor_msg->timestamp() << " ";
-                if(!strcmp(sensor_msg->topic().c_str(),"/camera/depth/image_raw")
+                if(!strcmp(sensor_msg->topic().c_str(),"/kinect2/sd/image_depth")
                         && fabs(sensor_msg->timestamp()-pose_stamp)<tolerance) {
 
 

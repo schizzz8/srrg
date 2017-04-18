@@ -76,11 +76,11 @@ int main(int argc, char ** argv) {
                 got_info = true;
             }
             if(got_info && !strcmp(pinhole_image_msg->topic().c_str(),"/camera/depth/image_raw")) {
-                LaserMessage* laser_msg = new LaserMessage;
+                LaserMessage laser_msg;
                 depth2laser->setOdometry(pinhole_image_msg->odometry());
-                depth2laser->setParameters(pinhole_image_msg->seq(),pinhole_image_msg->timestamp(),*laser_msg);
-                depth2laser->compute(pinhole_image_msg->image(),*laser_msg);
-                writer.writeMessage(*laser_msg);
+                depth2laser->setParameters(pinhole_image_msg->seq(),pinhole_image_msg->timestamp(),laser_msg);
+                depth2laser->compute(pinhole_image_msg->image(),laser_msg);
+                writer.writeMessage(laser_msg);
 
                 //viewer.scans.push_back(laser_msg->ranges());
                 //viewer.ranges = laser_msg->ranges();
